@@ -40,3 +40,8 @@
 .read-the-docs {
   color: #888;
 } */
+
+.mt-12 {
+  transition: margin-top 0.3s ease-in-out;
+}
+

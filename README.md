@@ -9,6 +9,7 @@ eKebele is a digital platform designed to streamline and manage administrative t
 - [Running the Application](#running-the-application)
 - [Contributing](#contributing)
 - [License](#license)
+- [Technologies Used](#technologies-used)
 
 ## Prerequisites
 
@@ -32,6 +33,17 @@ Follow these steps to install eKebele locally:
     npm install
     ```
 
+## Configuration
+
+Before running the application, you need to create a `.env` file in the root directory of the project. Copy the content from `.env.example` and modify it according to your environment.
+
+1. **Create a `.env` file:**
+    ```bash
+    cp .env.example .env
+    ```
+
+2. **Modify the `.env` file:**
+    Open the `.env` file and update the environment variables as needed.
 
 ## Running the Application
 
@@ -52,6 +64,14 @@ To contribute to eKebele, follow these steps:
 4. Push to the branch: `git push origin feature/your-feature-name`.
 5. Create a pull request.
 
-## License
+## Technologies Used
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+The frontend of eKebele is built using the following technologies:
+- **React**: A JavaScript library for building user interfaces.
+- **Tailwind CSS**: A utility-first CSS framework for rapid UI development.
+- **Axios**: A promise-based HTTP client for making API requests.
+- **React Router**: A library for routing in React applications.
+
+## Author
+
+[Wubeshet Yimam](https:linkein.com/in/wubeshet)

@@ -35,11 +35,6 @@ const Register = () => {
       return;
     }
 
-    // Handle successful signup logic (e.g., API call)
-    
-
-
-    // Actual API call to register user
 
     try {
       const res = await api.post("/auth/users/", {
@@ -72,7 +67,7 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background-light flex items-center justify-center">
+    <div className="min-h-screen bg-background-light flex items-center justify-center my-20">
       <div className="bg-white p-10 rounded-2xl shadow-lg w-full max-w-lg">
         <h2 className="text-3xl font-bold text-center text-primary-dark mb-6">Create Your Account</h2>
 

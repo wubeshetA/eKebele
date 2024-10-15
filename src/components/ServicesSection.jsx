@@ -1,26 +1,55 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const servicesData = {
-  "Vital Events": [
-    { name: "Birth Registration", link: "/services/birth-registration" },
-    { name: "Death Registration", link: "/services/death-registration" },
-  ],
-  Identification: [
-    { name: "National ID", link: "/services/national-id" },
-    { name: "Passport Application", link: "/services/passport-application" },
-  ],
-  Education: [
-    { name: "School Enrollment", link: "/services/school-enrollment" },
-    { name: "Exam Registration", link: "/services/exam-registration" },
-  ],
+    "Vital Events": [
+      { name: "Birth Registration", link: "/services/apply-birth-certificate", onboarded: true },
+      { name: "Death Registration", link: "/services/death-registration", onboarded: true },
+      { name: "Marriage Registration", link: "/services/marriage-registration", onboarded: true }, // Onboarded
+      { name: "Divorce Registration", link: "/services/not-onboarded", onboarded: false },
+      { name: "Adoption Registration", link: "/services/not-onboarded", onboarded: false },
+      { name: "Civil Status Amendment", link: "/services/civil-status-amendment", onboarded: true }, // New service
+      { name: "Paternity Acknowledgment", link: "/services/paternity-acknowledgment", onboarded: false }, // New service
+    ],
+    Identification: [
+      { name: "National ID", link: "/services/national-id", onboarded: true },
+      { name: "Passport Application", link: "/services/not-onboarded", onboarded: false },
+      { name: "Driver's License", link: "/services/drivers-license", onboarded: true }, // Onboarded
+      { name: "Voter ID", link: "/services/not-onboarded", onboarded: false },
+      { name: "Residency Card", link: "/services/not-onboarded", onboarded: false },
+      { name: "Work Permit", link: "/services/work-permit", onboarded: false }, // New service
+      { name: "Student ID", link: "/services/student-id", onboarded: true }, // New service
+    ],
+    "Property & Land": [ // New Category
+      { name: "Land Ownership Transfer", link: "/services/land-transfer", onboarded: false },
+      { name: "Property Registration", link: "/services/property-registration", onboarded: true }, // Onboarded
+      { name: "Mortgage Application", link: "/services/mortgage-application", onboarded: false },
+      { name: "Building Permit", link: "/services/building-permit", onboarded: false },
+      { name: "Land Dispute Resolution", link: "/services/land-dispute", onboarded: false },
+    ],
+    "Business & Trade": [ // New Category
+      { name: "Business License Application", link: "/services/business-license", onboarded: true }, // Onboarded
+      { name: "Trade Name Registration", link: "/services/trade-name-registration", onboarded: true }, // Onboarded
+      { name: "Taxpayer Registration", link: "/services/taxpayer-registration", onboarded: true }, // Onboarded
+      { name: "Import/Export License", link: "/services/import-export-license", onboarded: false },
+      { name: "Business Closure", link: "/services/business-closure", onboarded: false },
+    ],
+    "Health & Social Services": [ // New Category
+      { name: "Health Insurance Enrollment", link: "/services/health-insurance", onboarded: true }, // Onboarded
+      { name: "Social Security Registration", link: "/services/social-security", onboarded: false },
+      { name: "Disability Support", link: "/services/disability-support", onboarded: false },
+      { name: "Child Care Benefits", link: "/services/child-care-benefits", onboarded: false },
+      { name: "Elderly Care Registration", link: "/services/elderly-care", onboarded: false },
+    ]  
+  // Other categories...
 };
 
 const ServicesSection = () => {
   return (
-    <section className="py-16 bg-background-light">
-      <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center text-primary-dark mb-12">
-          Our Services
+    <section className="py-16 bg-background-light"> {/* Added mt-20 to add some space */}
+      <div className="container mx-auto px-5 lg:px-40 md:px-10">
+        <h2 className="text-3xl font-bold text-center text-primary-dark mb-12 mt-44">
+          Services
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {Object.keys(servicesData).map((category) => (
@@ -34,12 +63,12 @@ const ServicesSection = () => {
               <ul className="space-y-2">
                 {servicesData[category].map((service) => (
                   <li key={service.name}>
-                    <a
-                      href={service.link}
-                      className="text-blue-600 hover:text-blue-800 font-medium transition duration-200"
+                    <Link
+                      to={service.onboarded ? service.link : "/service-not-available"}
+                      className="text-primary-dark hover:text-blue-800 font-medium transition duration-200"
                     >
                       {service.name}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -50,5 +79,6 @@ const ServicesSection = () => {
     </section>
   );
 };
+
 
 export default ServicesSection;

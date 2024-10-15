@@ -22,7 +22,7 @@ const BannerSection = () => {
         <p className="text-gray-600 text-justify">
           eKebele is a platform designed to streamline access to essential government services. 
           We aim to simplify administrative processes and empower citizens by offering convenient digital solutions 
-          that improve efficiency, transparency, and accessibility.
+          that improve efficiency, and accessibility.
           {isExpanded && (
             <span>
               {' '}With eKebele, citizens can easily access a range of services such as birth registration, business permits, 

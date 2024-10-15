@@ -10,7 +10,7 @@ const SupportPage = () => {
       </header>
 
       <main className="p-8">
-        <section className="mb-8">
+        <section className="mb-8 text-center">
           <h2 className="text-2xl font-semibold text-primary">How can we assist you?</h2>
           <p className="mt-2 text-text-light">Browse through our common support topics or reach out to us directly.</p>
         </section>

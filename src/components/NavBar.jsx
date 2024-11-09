@@ -6,14 +6,11 @@ import eKebeleLogo from '../assets/EKEBELE.svg';
 import en from '../assets/gb.svg';
 import am from '../assets/et.svg';
 import { userLogged } from '../utils';
-
-// Assume `userLogged` is a function that checks if the user is logged in
-// const userLogged = () => {
-//   // Replace with your actual login status logic
-//   return userLogged; // For demo purposes, assuming user is logged in
-// };
+import i18next from 'i18next';
+import { useTranslation } from 'react-i18next';
 
 const NavBar = () => {
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false); // For mobile menu
   const [isLanguageOpen, setIsLanguageOpen] = useState(false); // For language dropdown
   const [language, setLanguage] = useState('English'); // Default language
@@ -23,9 +20,17 @@ const NavBar = () => {
   const searchBarRef = useRef(null); // To track clicks outside of search bar
   const showNotifier = useSelector((state) => state.notifier.showNotifier);
 
+
+  
   const toggleLanguage = (lang) => {
-    setLanguage(lang);
-    setIsLanguageOpen(false); // Close dropdown after selection
+    if (lang === 'en') {
+      setLanguage(t('english'));
+    }
+    else if (lang === 'am') {
+      setLanguage(t('amharic'));
+    }
+    setIsLanguageOpen(false);
+    i18next.changeLanguage(lang);
   };
 
   const handleSearchClick = () => {
@@ -78,7 +83,7 @@ const NavBar = () => {
             {/* Support Center Link */}
             <Link to="/support-center" className="flex items-center text-white hover:text-gray-300">
               <FiHelpCircle className="w-5 h-5 mr-2" />
-              Support Center
+              {t('support-center')}
             </Link>
 
             {!userLogged() ? (
@@ -86,13 +91,13 @@ const NavBar = () => {
                 {/* Sign Up Link */}
                 <Link to="/sign-up" className="flex items-center text-white hover:text-gray-300">
                   <FiUserPlus className="w-5 h-5 mr-2" />
-                  Sign Up
+                  {t('sign-up')}
                 </Link>
 
                 {/* Log In Button */}
                 <Link to="/login" className="flex items-center text-white hover:text-gray-300">
                   <FiLogIn className="w-5 h-5 mr-2" />
-                  Log In
+                  {t('log-in')}
                 </Link>
               </>
             ) : <></>}
@@ -120,7 +125,7 @@ const NavBar = () => {
                 }}
               >
                 <FiSearch className="w-5 h-5 mr-2 " />
-                {isSearchOpen ? 'Search' : 'Find Application'}
+                {isSearchOpen ? t('search') : t('find-application')}
               </button>
             </div>
 
@@ -145,17 +150,17 @@ const NavBar = () => {
                   <div className="py-1" role="menu">
                     <button
                       className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full"
-                      onClick={() => toggleLanguage('English')}
+                      onClick={() => toggleLanguage('en')}
                     >
                       <img src={en} alt="English" className="w-5 h-5 mr-2 rounded-full" />
-                      English
+                      {t('english')}
                     </button>
                     <button
                       className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full"
-                      onClick={() => toggleLanguage('Amharic')}
+                      onClick={() => toggleLanguage('am')}
                     >
                       <img src={am} alt="Amharic" className="w-5 h-5 mr-2 rounded-full" />
-                      Amharic
+                      {t('amharic')}
                     </button>
                   </div>
                 </div>
@@ -200,19 +205,19 @@ const NavBar = () => {
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             <Link to="/support-center" className="flex items-center text-white hover:text-gray-300 block px-3 py-2 rounded-md text-base font-medium">
               <FiHelpCircle className="w-5 h-5 mr-2" />
-              Support Center
+              {t('support-center')}
             </Link>
 
             {!userLogged() ? (
               <>
                 <Link to="/sign-up" className="flex items-center text-white hover:text-gray-300 block px-3 py-2 rounded-md text-base font-medium">
                   <FiUserPlus className="w-5 h-5 mr-2" />
-                  Sign Up
+                  {t('sign-up')}
                 </Link>
 
                 <Link to="/login" className="flex items-center text-white hover:text-gray-300 block px-3 py-2 rounded-md text-base font-medium">
                   <FiLogIn className="w-5 h-5 mr-2" />
-                  Log In
+                  {t('log-in')}
                 </Link>
               </>
             ) : <></>}

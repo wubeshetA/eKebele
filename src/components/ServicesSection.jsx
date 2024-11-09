@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 
 const servicesData = {
     "Vital Events": [
@@ -41,15 +42,15 @@ const servicesData = {
       { name: "Child Care Benefits", link: "/services/child-care-benefits", onboarded: false },
       { name: "Elderly Care Registration", link: "/services/elderly-care", onboarded: false },
     ]  
-  // Other categories...
 };
 
 const ServicesSection = () => {
+  const { t } = useTranslation();
   return (
     <section className="py-16 bg-background-light"> {/* Added mt-20 to add some space */}
       <div className="container mx-auto px-5 lg:px-40 md:px-10">
         <h2 className="text-3xl font-bold text-center text-primary-dark mb-12 mt-44">
-          Services
+          {t("services")}
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {Object.keys(servicesData).map((category) => (
@@ -58,7 +59,7 @@ const ServicesSection = () => {
               className="bg-white shadow-md rounded-lg p-6 transition duration-300 hover:shadow-lg"
             >
               <h3 className="text-2xl font-semibold mb-4 text-gray-800">
-                {category}
+              {t(`categories.${category}`)}
               </h3>
               <ul className="space-y-2">
                 {servicesData[category].map((service) => (
@@ -67,7 +68,7 @@ const ServicesSection = () => {
                       to={service.onboarded ? service.link : "/service-not-available"}
                       className="text-primary-dark hover:text-blue-800 font-medium transition duration-200"
                     >
-                      {service.name}
+                      {t(`servicesList.${service.name}`)}
                     </Link>
                   </li>
                 ))}

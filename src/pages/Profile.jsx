@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FiLogOut } from 'react-icons/fi'; // Logout Icon
+import { FiLogOut, FiArrowRight } from 'react-icons/fi'; // Import Logout and Right Arrow Icons
 import { logoutUser } from '../utils';
 import { useNavigate } from 'react-router-dom';
 import api from '../api/api'; // Import your API call module
@@ -44,6 +44,10 @@ const ProfilePage = () => {
         navigate('/');
     };
 
+    const handleOpenDashboard = () => {
+        navigate('/dashboard');
+    };
+
     if (loading) {
         return <div>Loading...</div>;
     }
@@ -74,13 +78,25 @@ const ProfilePage = () => {
                 <div className="my-6 border-t border-gray-300"></div>
 
                 {/* Logout Button */}
+
+                <button
+                    onClick={handleOpenDashboard}
+                    className="flex items-center justify-center w-full bg-primary-dark text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-all mt-4"
+                >
+                    <span>Open Dashboard</span>
+                    <FiArrowRight className="ml-2" />
+                </button>
+
                 <button
                     onClick={handleLogout}
-                    className="flex items-center justify-center w-full bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 transition-all"
+                    className="flex items-center justify-center w-full bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 transition-all mt-8"
                 >
                     <FiLogOut className="mr-2" />
                     Logout
                 </button>
+
+                {/* Open Dashboard Button */}
+                
             </div>
         </div>
     );

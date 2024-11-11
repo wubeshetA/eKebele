@@ -11,15 +11,23 @@ import { useTranslation } from 'react-i18next';
 
 const NavBar = () => {
   const { t } = useTranslation();
+  
+
   const [isOpen, setIsOpen] = useState(false); // For mobile menu
   const [isLanguageOpen, setIsLanguageOpen] = useState(false); // For language dropdown
-  const [language, setLanguage] = useState('English'); // Default language
+  const [language, setLanguage] = useState("English"); 
   const [isSearchOpen, setIsSearchOpen] = useState(false); // For search bar visibility
   const [searchQuery, setSearchQuery] = useState(''); // For search input value
   const [isScrolled, setIsScrolled] = useState(false); // For tracking scroll position
   const searchBarRef = useRef(null); // To track clicks outside of search bar
   const showNotifier = useSelector((state) => state.notifier.showNotifier);
 
+  useEffect(() => {
+    const savedLanguage = localStorage.getItem('i18nextLng') || 'en';
+    const languageName = savedLanguage === 'en' ? 'English' : 'አማርኛ';
+    setLanguage(languageName);
+    i18next.changeLanguage(savedLanguage); 
+  }, []);
 
   
   const toggleLanguage = (lang) => {
@@ -31,6 +39,7 @@ const NavBar = () => {
     }
     setIsLanguageOpen(false);
     i18next.changeLanguage(lang);
+    localStorage.setItem('i18nextLng', lang);
   };
 
   const handleSearchClick = () => {
@@ -38,7 +47,6 @@ const NavBar = () => {
       // Implement search functionality here
     }
   };
-
   // Handle clicks outside of the search bar to collapse it
   useEffect(() => {
     const handleClickOutside = (event) => {

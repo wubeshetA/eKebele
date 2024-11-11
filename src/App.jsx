@@ -7,17 +7,18 @@ import ServicesSection from './components/ServicesSection';
 import { Route, BrowserRouter as Router, Routes, Navigate } from 'react-router-dom';
 import Register from './pages/Register';
 import ServiceNotAvailable from './pages/ServiceNotAvaliable'; // Import the Service Not Available page
-import Dashboard from './pages/Dashboard';
+import Dashboard from './pages/vital_events/Dashbaord';
 
 import ProtectedRoute from './components/ProtectedRoute';
 import { REFRESH_TOKEN, ACCESS_TOKEN } from "./constants";
 
-import BirthCertificateForm from './pages/BirthCertificateForm';
+import BirthCertificateForm from './pages/vital_events/BirthCertificateForm';
 import LoginPage from './pages/LoginPage'; // Changed from LoginModal to LoginPage
 import PageNotFound from './pages/PageNotFound';
 import ProfilePage from './pages/Profile';
 import SupportPage from './pages/SupportPage';
 import FAQSection from './pages/FAQ';
+import BirthCertificateDetail from './pages/vital_events/BirthCertificateDetail';
 
 function Logout () {
   localStorage.removeItem(ACCESS_TOKEN);
@@ -50,6 +51,7 @@ const App = () => {
 
             {/* Route for Birth Certificate Form */}
             <Route path="/services/apply-birth-certificate" element={<BirthCertificateForm />} />
+            <Route path="/services/vital-events/:id" element={<BirthCertificateDetail />} />
 
             {/* Home Route */}
             <Route

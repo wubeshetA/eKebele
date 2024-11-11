@@ -155,9 +155,15 @@ i18n.use(initReactI18next).init({
      } },
    
   },
-  lng: "en", // Default language
-  fallbackLng: "en",
-  interpolation: { escapeValue: false }
+  lng: localStorage.getItem('i18nextLng') || 'en', // Default to 'en' if no language is selected
+    fallbackLng: 'en',
+    detection: {
+      order: ['localStorage', 'navigator'], // Look in localStorage first
+      caches: ['localStorage'],
+    },
+    interpolation: {
+      escapeValue: false, // React already handles escaping
+    },
 });
 
 export default i18n;

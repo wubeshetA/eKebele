@@ -14,7 +14,7 @@ const BannerSection = () => {
   return (
     <div className="relative w-full bg-primary-dark h-[40vh] flex flex-col justify-center items-center text-white">
       
-      {/* <h1 className="text-3xl font-bold z-2">EKEBELE</h1> */}
+      
       <h1 className="font-bold text-3xl md:text-3xl lg:text-4xl tracking-widest">E K B E L E</h1>
         <p className="text-sm md:text-base lg:text-lg mb-20">{t('driving-digital-governance')}</p>
 

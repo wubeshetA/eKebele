@@ -72,6 +72,10 @@ The frontend of eKebele is built using the following technologies:
 - **Axios**: A promise-based HTTP client for making API requests.
 - **React Router**: A library for routing in React applications.
 
+## Deployment
+
+The application is deployed on Vercel. You can access the live version [here](https://e-kebele.vercel.app/).
+
 ## Author
 
 [Wubeshet Yimam](https:linkein.com/in/wubeshet)

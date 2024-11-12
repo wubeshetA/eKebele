@@ -3,6 +3,7 @@ import { FiLogOut, FiArrowRight } from 'react-icons/fi'; // Import Logout and Ri
 import { logoutUser } from '../utils';
 import { useNavigate } from 'react-router-dom';
 import api from '../api/api'; // Import your API call module
+import SpinnerLoading from '../components/SpinnerLoading';
 
 const ProfilePage = () => {
     const navigate = useNavigate();
@@ -49,8 +50,8 @@ const ProfilePage = () => {
     };
 
     if (loading) {
-        return <div>Loading...</div>;
-    }
+        return <SpinnerLoading />; // Display the overlay spinner
+      }
 
     if (error) {
         return <div>{error}</div>;
@@ -95,7 +96,7 @@ const ProfilePage = () => {
                     Logout
                 </button>
 
-                {/* Open Dashboard Button */}
+              
                 
             </div>
         </div>

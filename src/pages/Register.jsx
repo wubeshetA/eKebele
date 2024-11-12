@@ -19,6 +19,7 @@ const Register = () => {
     // Validate required fields
     if (!firstName || !lastName || !phoneNumber || !password) {
       setErrorMessage("Please fill out all required fields.");
+      setLoading(false);
       return;
     }
 
@@ -26,12 +27,14 @@ const Register = () => {
     const phonePattern = /^[0-9]{10}$/;
     if (!phonePattern.test(phoneNumber)) {
       setErrorMessage("Please enter a valid 10-digit phone number.");
+      setLoading(false);
       return;
     }
 
     // Password validation (e.g., minimum length)
     if (password.length < 6) {
       setErrorMessage("Password must be at least 6 characters long.");
+      setLoading(false);
       return;
     }
 
@@ -61,6 +64,8 @@ const Register = () => {
     finally {
       setLoading(false);
     }
+
+    
 
 
 
@@ -158,12 +163,30 @@ const Register = () => {
           </div>
 
           {/* Submit Button */}
-          <button
+          {/* <button
             type="submit"
             className="w-full bg-primary text-white py-3 px-4 rounded-lg hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary-dark focus:ring-offset-2"
           >
             Register
+          </button> */}
+
+
+          <button 
+            type="submit" 
+            className={`w-full bg-primary text-white py-3 px-4 rounded-lg flex items-center justify-center hover:bg-primary-dark ${loading ? 'opacity-50' : ''}`}
+            disabled={loading}
+          >
+            {loading ? (
+              <>
+                <div className="w-5 h-5 border-4 border-white border-t-transparent border-solid rounded-full animate-spin mr-2"></div>
+                Registering
+              </>
+            ) : (
+              "Register"
+            )}
           </button>
+
+
         </form>
 
         {/* Have an account? Log in Section */}
@@ -176,7 +199,7 @@ const Register = () => {
         {/* Help Section */}
         <div className="mt-4 text-center">
           <p className="text-sm text-gray-600">
-            Need help? <a href="/help" className="text-primary hover:underline">Contact Support</a>
+            Need help? <Link to="/support-center" className="text-primary hover:underline">Contact Support</Link>
           </p>
         </div>
       </div>

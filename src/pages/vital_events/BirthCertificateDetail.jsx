@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import api from '../../api/api';
 import jsPDF from 'jspdf';
+import SpinnerLoading from '../../components/SpinnerLoading';
 
 const BirthCertificateDetail = () => {
   const { id } = useParams();
@@ -160,7 +161,9 @@ const BirthCertificateDetail = () => {
     }
   };
 
-  if (!application) return <p>Loading...</p>;
+  if (!application) {
+    return <SpinnerLoading />; // Display the overlay spinner
+  }
 
   return (
     <div className="bg-background-light min-h-screen flex flex-col items-center p-6">

@@ -8,11 +8,14 @@ import am from '../assets/et.svg';
 import { userLogged } from '../utils';
 import i18next from 'i18next';
 import { useTranslation } from 'react-i18next';
+import Popup from './Popup';
+import api from '../api/api';
+import SpinnerLoading from './SpinnerLoading';
 
 const NavBar = () => {
   const { t } = useTranslation();
-  
-
+  const [popupData, setPopupData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false); // For mobile menu
   const [isLanguageOpen, setIsLanguageOpen] = useState(false); // For language dropdown
   const [language, setLanguage] = useState("English"); 
@@ -42,11 +45,29 @@ const NavBar = () => {
     localStorage.setItem('i18nextLng', lang);
   };
 
-  const handleSearchClick = () => {
+  const handleSearchClick = async () => {
     if (searchQuery.trim()) {
-      // Implement search functionality here
+      setIsLoading(true); // Show spinner when search starts
+      try {
+        const response = await api.get(`/api/vital-events/applications/${searchQuery}/`);
+        setPopupData(response.data); // Show data in pop-up
+      } catch (error) {
+        console.error('Error fetching application:', error);
+        alert('Application not found');
+      } finally {
+        setIsLoading(false); // Hide spinner when request completes
+      }
     }
   };
+
+  const closePopup = () => setPopupData(null);
+  
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      handleSearchClick(); // Trigger search on "Enter" key press
+    }
+  };
+
   // Handle clicks outside of the search bar to collapse it
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -241,9 +262,39 @@ const NavBar = () => {
               Logout
             </button>  }
             
+
+            {/* find applciaiton button */}
+
+            <div className="flex items-center" ref={searchBarRef}>
+              {isSearchOpen ? (
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="text-gray-900 px-3 py-1 border border-gray-300 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-green-400 mb-2"
+                  placeholder="Search for application..."
+                  onKeyDown={handleKeyPress} // Trigger search on Enter key press
+                />
+              ) : (
+                <button
+                  type="button"
+                  className="flex items-center bg-primary text-white hover:bg-primary-light px-4 py-2 rounded-md w-full"
+                  onClick={() => setIsSearchOpen(true)} // Show input and hide button
+                >
+                  <FiSearch className="w-5 h-5 mr-2" />
+                  {t('find-application')}
+                </button>
+              )}
+            </div>
+
+            
           </div>
         </div>
       )}
+
+{isLoading && <SpinnerLoading />}
+
+  {popupData && <Popup data={popupData} onClose={closePopup} />}
     </nav>
   );
 };

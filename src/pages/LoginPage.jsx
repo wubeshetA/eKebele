@@ -98,11 +98,19 @@ const LoginPage = () => {
           {/* Submit Button */}
           <button 
             type="submit" 
-            className={`w-full bg-primary text-white py-3 px-4 rounded-lg hover:bg-primary-dark ${loading ? 'opacity-50' : ''}`}
+            className={`w-full bg-primary text-white py-3 px-4 rounded-lg flex items-center justify-center hover:bg-primary-dark ${loading ? 'opacity-50' : ''}`}
             disabled={loading}
           >
-            {loading ? "Logging in..." : "Login"}
+            {loading ? (
+              <>
+                <div className="w-5 h-5 border-4 border-white border-t-transparent border-solid rounded-full animate-spin mr-2"></div>
+                Logging in...
+              </>
+            ) : (
+              "Login"
+            )}
           </button>
+
         </form>
         
         <div className="mt-4 text-center text-sm text-gray-500">

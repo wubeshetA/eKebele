@@ -5,38 +5,38 @@ import { useTranslation } from 'react-i18next';
 const servicesData = {
     "Vital Events": [
       { name: "Birth Registration", link: "/services/apply-birth-certificate", onboarded: true },
-      { name: "Death Registration", link: "/services/death-registration", onboarded: true },
-      { name: "Marriage Registration", link: "/services/marriage-registration", onboarded: true }, // Onboarded
+      { name: "Death Registration", link: "/services/death-registration", onboarded: false },
+      { name: "Marriage Registration", link: "/services/marriage-registration", onboarded: false }, // Onboarded
       { name: "Divorce Registration", link: "/services/not-onboarded", onboarded: false },
       { name: "Adoption Registration", link: "/services/not-onboarded", onboarded: false },
-      { name: "Civil Status Amendment", link: "/services/civil-status-amendment", onboarded: true }, // New service
+      { name: "Civil Status Amendment", link: "/services/civil-status-amendment", onboarded: false }, // New service
       { name: "Paternity Acknowledgment", link: "/services/paternity-acknowledgment", onboarded: false }, // New service
     ],
     Identification: [
-      { name: "National ID", link: "/services/national-id", onboarded: true },
+      { name: "National ID", link: "/services/national-id", onboarded: false },
       { name: "Passport Application", link: "/services/not-onboarded", onboarded: false },
-      { name: "Driver's License", link: "/services/drivers-license", onboarded: true }, // Onboarded
+      { name: "Driver's License", link: "/services/drivers-license", onboarded: false }, // Onboarded
       { name: "Voter ID", link: "/services/not-onboarded", onboarded: false },
       { name: "Residency Card", link: "/services/not-onboarded", onboarded: false },
       { name: "Work Permit", link: "/services/work-permit", onboarded: false }, // New service
-      { name: "Student ID", link: "/services/student-id", onboarded: true }, // New service
+      { name: "Student ID", link: "/services/student-id", onboarded: false }, // New service
     ],
     "Property & Land": [ // New Category
       { name: "Land Ownership Transfer", link: "/services/land-transfer", onboarded: false },
-      { name: "Property Registration", link: "/services/property-registration", onboarded: true }, // Onboarded
+      { name: "Property Registration", link: "/services/property-registration", onboarded: false }, // Onboarded
       { name: "Mortgage Application", link: "/services/mortgage-application", onboarded: false },
       { name: "Building Permit", link: "/services/building-permit", onboarded: false },
       { name: "Land Dispute Resolution", link: "/services/land-dispute", onboarded: false },
     ],
     "Business & Trade": [ // New Category
-      { name: "Business License Application", link: "/services/business-license", onboarded: true }, // Onboarded
-      { name: "Trade Name Registration", link: "/services/trade-name-registration", onboarded: true }, // Onboarded
-      { name: "Taxpayer Registration", link: "/services/taxpayer-registration", onboarded: true }, // Onboarded
+      { name: "Business License Application", link: "/services/business-license", onboarded: false }, // Onboarded
+      { name: "Trade Name Registration", link: "/services/trade-name-registration", onboarded: false }, // Onboarded
+      { name: "Taxpayer Registration", link: "/services/taxpayer-registration", onboarded: false }, // Onboarded
       { name: "Import/Export License", link: "/services/import-export-license", onboarded: false },
       { name: "Business Closure", link: "/services/business-closure", onboarded: false },
     ],
     "Health & Social Services": [ // New Category
-      { name: "Health Insurance Enrollment", link: "/services/health-insurance", onboarded: true }, // Onboarded
+      { name: "Health Insurance Enrollment", link: "/services/health-insurance", onboarded: false }, // Onboarded
       { name: "Social Security Registration", link: "/services/social-security", onboarded: false },
       { name: "Disability Support", link: "/services/disability-support", onboarded: false },
       { name: "Child Care Benefits", link: "/services/child-care-benefits", onboarded: false },

@@ -2,7 +2,12 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom"; // Import Link for routing
 import api from "../api/api";
 
+import { useNavigate } from "react-router-dom"; // Import useNavigate
+
+
+
 const Register = () => {
+  const navigate = useNavigate(); 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -15,6 +20,8 @@ const Register = () => {
     e.preventDefault();
     setErrorMessage("");
     setLoading(true);
+
+    console.log(firstName, lastName, phoneNumber, email, password);
 
     // Validate required fields
     if (!firstName || !lastName || !phoneNumber || !password) {
@@ -48,12 +55,7 @@ const Register = () => {
         "password": password
       });
       if (res.status === 201) {
-          console.log("First Name:", firstName);
-          console.log("Last Name:", lastName);
-          console.log("Phone Number:", phoneNumber);
-          console.log("Email:", email);
-          console.log("Password:", password);
-          alert("Signup successful!");
+        navigate("/verify-email", { state: { email } });
       } else {
         setErrorMessage("An error occurred. Please try again later.");
       }
@@ -66,8 +68,6 @@ const Register = () => {
     }
 
     
-
-
 
   };
 
@@ -162,13 +162,6 @@ const Register = () => {
             />
           </div>
 
-          {/* Submit Button */}
-          {/* <button
-            type="submit"
-            className="w-full bg-primary text-white py-3 px-4 rounded-lg hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary-dark focus:ring-offset-2"
-          >
-            Register
-          </button> */}
 
 
           <button 

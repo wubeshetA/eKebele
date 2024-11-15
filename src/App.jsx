@@ -19,6 +19,7 @@ import ProfilePage from './pages/Profile';
 import SupportPage from './pages/SupportPage';
 import FAQSection from './pages/FAQ';
 import BirthCertificateDetail from './pages/vital_events/BirthCertificateDetail';
+import EmailVerification from './pages/EmailVerification';
 
 function Logout () {
   localStorage.removeItem(ACCESS_TOKEN);
@@ -75,8 +76,10 @@ const App = () => {
             <Route path="/service-not-available" element={<ServiceNotAvailable />} />
             <Route path="/logout" element={<Logout />} />
             <Route path="/support-center" element={<SupportPage />} />
-            
+            <Route path='/verify-email' element={<EmailVerification />} />
             <Route path='/profile' element={<ProtectedRoute>
+            
+
                  <ProfilePage />
                 </ProtectedRoute>} />
 

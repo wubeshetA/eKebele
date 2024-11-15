@@ -336,13 +336,22 @@ const BirthCertificateForm = () => {
 
             {/* Submit Button */}
             <div className="mt-6">
-              <button
-                type="submit"
-                className={`w-full bg-primary hover:bg-primary-light text-white font-semibold py-3 px-6 rounded-lg transition-colors ${loading ? 'opacity-50' : ''}`}
-                disabled={loading}
-              >
-                {loading ? 'Submitting...' : 'Submit Application'}
-              </button>
+            <button 
+            type="submit" 
+            className={`w-full bg-primary text-white py-3 px-4 rounded-lg flex items-center justify-center hover:bg-primary-dark ${loading ? 'opacity-50' : ''}`}
+            disabled={loading}
+          >
+            {loading ? (
+              <>
+                <div className="w-5 h-5 border-4 border-white border-t-transparent border-solid rounded-full animate-spin mr-2"></div>
+                Submitting...
+              </>
+            ) : (
+              "Submit Application"
+            )}
+          </button>
+
+              
             </div>
           </form>
         )}

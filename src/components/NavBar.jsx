@@ -12,7 +12,9 @@ import Popup from './Popup';
 import api from '../api/api';
 import SpinnerLoading from './SpinnerLoading';
 
+
 const NavBar = () => {
+
   const { t } = useTranslation();
   const [popupData, setPopupData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -24,12 +26,28 @@ const NavBar = () => {
   const [isScrolled, setIsScrolled] = useState(false); // For tracking scroll position
   const searchBarRef = useRef(null); // To track clicks outside of search bar
   const showNotifier = useSelector((state) => state.notifier.showNotifier);
+  const [user, setUser] = useState(null); // State to store user data
 
   useEffect(() => {
     const savedLanguage = localStorage.getItem('i18nextLng') || 'en';
     const languageName = savedLanguage === 'en' ? 'English' : 'አማርኛ';
     setLanguage(languageName);
     i18next.changeLanguage(savedLanguage); 
+  }, []);
+
+
+  useEffect(() => {
+    if (userLogged()) {
+      const fetchUserData = async () => {
+        try {
+          const response = await api.get('/auth/users/me/');
+          setUser(response.data);
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+        }
+      };
+      fetchUserData();
+    }
   }, []);
 
   
@@ -200,7 +218,8 @@ const NavBar = () => {
               // Avatar with User's Initial (assuming user's initial is W for now)
               <Link to="/profile" className="flex items-center">
                 <div className="bg-white text-primary-dark w-8 h-8 flex items-center justify-center rounded-full">
-                  W
+                
+                {user ? user.first_name.charAt(0).toUpperCase() : ''}
                 </div>
               </Link>
           }

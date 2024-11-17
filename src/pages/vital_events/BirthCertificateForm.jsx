@@ -1,4 +1,3 @@
-// src/pages/BirthCertificateForm.jsx
 import React, { useState } from 'react';
 import api from '../../api/api';
 
@@ -21,6 +20,8 @@ const BirthCertificateForm = () => {
     applicant_email_address: '',
     phone_number: '',
   });
+
+  const [currentStage, setCurrentStage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [successData, setSuccessData] = useState(null);
@@ -34,6 +35,7 @@ const BirthCertificateForm = () => {
   };
 
   const handleSubmit = async (e) => {
+    console.log(formData);
     e.preventDefault();
     setLoading(true);
     setErrorMessage('');
@@ -51,307 +53,317 @@ const BirthCertificateForm = () => {
     } finally {
       setLoading(false);
     }
+  };
 
-    console.log(formData);
+  const nextStage = () => setCurrentStage((prev) => Math.min(prev + 1, 3));
+  const previousStage = () => setCurrentStage((prev) => Math.max(prev - 1, 1));
+
+  const renderStage = () => {
+    switch (currentStage) {
+      case 1:
+        return (
+          <>
+            <h2 className="text-lg font-bold mb-4">Applicant Information</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block mb-2 font-medium" htmlFor="applicant_name">
+                  Your Name
+                </label>
+                <input
+                  type="text"
+                  id="applicant_name"
+                  name="applicant_name"
+                  value={formData.applicant_name}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-2 border rounded-lg"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block mb-2 font-medium" htmlFor="applicant_email_address">
+                  Your Email Address
+                </label>
+                <input
+                  type="email"
+                  id="applicant_email_address"
+                  name="applicant_email_address"
+                  value={formData.applicant_email_address}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-2 border rounded-lg"
+                />
+              </div>
+              <div>
+                <label className="block mb-2 font-medium" htmlFor="phone_number">
+                  Your Phone Number
+                </label>
+                <input
+                  type="tel"
+                  id="phone_number"
+                  name="phone_number"
+                  value={formData.phone_number}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-2 border rounded-lg"
+                  required
+                />
+              </div>
+            </div>
+          </>
+        );
+      case 2:
+        return (
+          <>
+            <h2 className="text-lg font-bold mb-10">Birth Record Information</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block mb-2 font-medium" htmlFor="first_name">
+                  First Name
+                </label>
+                <input
+                  type="text"
+                  id="first_name"
+                  name="first_name"
+                  value={formData.first_name}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-2 border rounded-lg"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block mb-2 font-medium" htmlFor="middle_name">
+                  Middle Name
+                </label>
+                <input
+                  type="text"
+                  id="middle_name"
+                  name="middle_name"
+                  value={formData.middle_name}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-2 border rounded-lg"
+                />
+              </div>
+              <div>
+                <label className="block mb-2 font-medium" htmlFor="last_name">
+                Last Name
+                </label>
+                <input
+                  type="text"
+                  id="last_name"
+                  name="last_name"
+                  value={formData.last_name}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-2 border rounded-lg"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block mb-2 font-medium" htmlFor="nationality">
+                  Nationality
+                </label>
+                <input
+                  type="text"
+                  id="nationality"
+                  name="nationality"
+                  value={formData.nationality}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-2 border rounded-lg"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block mb-2 font-medium" htmlFor="gender">
+                  Gender
+                </label>
+                <select
+                  name="gender"
+                  value={formData.gender}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-2 border rounded-lg"
+                  required
+                >
+                  <option value="" disabled>
+                    Select Gender
+                  </option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select>
+              </div>
+            </div>
+            <h3 className="text-md font-bold mt-20">Parent Information</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+              <div>
+                <label className="block mb-2 font-medium" htmlFor="father_fullname">
+                  Father's Full Name
+                </label>
+                <input
+                  type="text"
+                  id="father_fullname"
+                  name="father_fullname"
+                  value={formData.father_fullname}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-2 border rounded-lg"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block mb-2 font-medium" htmlFor="father_nationality">
+                  Father's Nationality
+                </label>
+                <input
+                  type="text"
+                  id="father_nationality"
+                  name="father_nationality"
+                  value={formData.father_nationality}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-2 border rounded-lg"
+                />
+              </div>
+              <div>
+                <label className="block mb-2 font-medium" htmlFor="mother_fullname">
+                  Mother's Full Name
+                </label>
+                <input
+                  type="text"
+                  id="mother_fullname"
+                  name="mother_fullname"
+                  value={formData.mother_fullname}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-2 border rounded-lg"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block mb-2 font-medium" htmlFor="mother_nationality">
+                  Mother's Nationality
+                </label>
+                <input
+                  type="text"
+                  id="mother_nationality"
+                  name="mother_nationality"
+                  value={formData.mother_nationality}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-2 border rounded-lg"
+                />
+              </div>
+            </div>
+          </>
+        );
+      case 3:
+        return (
+          <>
+            <h2 className="text-lg font-bold mb-4">Birth Details</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block mb-2 font-medium" htmlFor="dob">
+                  Date of Birth
+                </label>
+                <input
+                  type="date"
+                  id="dob"
+                  name="dob"
+                  value={formData.dob}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-2 border rounded-lg"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block mb-2 font-medium" htmlFor="country_of_birth">
+                  Country of Birth
+                </label>
+                <input
+                  type="text"
+                  id="country_of_birth"
+                  name="country_of_birth"
+                  value={formData.country_of_birth}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-2 border rounded-lg"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block mb-2 font-medium" htmlFor="region_of_birth">
+                  Region of Birth
+                </label>
+                <input
+                  type="text"
+                  id="region_of_birth"
+                  name="region_of_birth"
+                  value={formData.region_of_birth}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-2 border rounded-lg"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block mb-2 font-medium" htmlFor="place_of_birth">
+                  Place of Birth
+                </label>
+                <input
+                  type="text"
+                  id="place_of_birth"
+                  name="place_of_birth"
+                  value={formData.place_of_birth}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-2 border rounded-lg"
+                  required
+                />
+              </div>
+            </div>
+          </>
+        );
+      default:
+        return null;
+    }
   };
 
   return (
-    <div className="bg-background-light min-h-screen py-10 p-4 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-2xl">
+    <div className="bg-gray-100 min-h-screen py-10 px-4 flex items-center justify-center">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-3xl">
         {successData ? (
           <div className="text-center">
-            <h1 className="text-3xl font-semibold mb-6 text-green-600">
-              Application Submitted Successfully!
-            </h1>
-            <p className="text-lg mb-4">
-              Your application for a birth certificate has been successfully submitted.
-            </p>
-            <p className="text-lg font-bold mb-6">
-              Your Application Tracking Number is: <span className="text-primary">{successData.applicationNumber}</span>
-            </p>
-            <p className="text-gray-700">Please save this number for future reference.</p>
-          </div>
+          <h1 className="text-3xl font-semibold mb-6 text-green-600">
+            Application Submitted Successfully!
+          </h1>
+          <p className="text-lg mb-4">
+            Your application for a birth certificate has been successfully submitted.
+          </p>
+          <p className="text-lg font-bold mb-6">
+            Your Application Tracking Number is: <span className="text-primary">{successData.applicationNumber}</span>
+          </p>
+          <p className="text-gray-700">Please save this number for future reference.</p>
+        </div>
         ) : (
           <form onSubmit={handleSubmit}>
-            <h1 className="text-3xl font-semibold mb-6 text-center">Apply for Birth Certificate</h1>
-
-            {errorMessage && (
-              <div className="mb-4 text-red-500 text-center">
-                {errorMessage}
-              </div>
-            )}
-
-            {/* Applicant Name */}
-            <div className="mb-4">
-              <label className="block text-text font-medium mb-2" htmlFor="applicant_name">
-                Applicant Name
-              </label>
-              <input
-                type="text"
-                id="applicant_name"
-                name="applicant_name"
-                value={formData.applicant_name}
-                onChange={handleInputChange}
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                required
-              />
-            </div>
-
-            {/* First Name */}
-            <div className="mb-4">
-              <label className="block text-text font-medium mb-2" htmlFor="first_name">
-                 First Name
-              </label>
-              <input
-                type="text"
-                id="first_name"
-                name="first_name"
-                value={formData.first_name}
-                onChange={handleInputChange}
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                required
-              />
-            </div>
-
-            {/* Middle Name */}
-            <div className="mb-4">
-              <label className="block text-text font-medium mb-2" htmlFor="middle_name">
-                 Middle Name
-              </label>
-              <input
-                type="text"
-                id="middle_name"
-                name="middle_name"
-                value={formData.middle_name}
-                onChange={handleInputChange}
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-              />
-            </div>
-
-            {/* Last Name */}
-            <div className="mb-4">
-              <label className="block text-text font-medium mb-2" htmlFor="last_name">
-                 Last Name
-              </label>
-              <input
-                type="text"
-                id="last_name"
-                name="last_name"
-                value={formData.last_name}
-                onChange={handleInputChange}
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                required
-              />
-            </div>
-
-            {/* Nationality */}
-            <div className="mb-4">
-              <label className="block text-text font-medium mb-2" htmlFor="nationality">
-                 Nationality
-              </label>
-              <input
-                type="text"
-                id="nationality"
-                name="nationality"
-                value={formData.nationality}
-                onChange={handleInputChange}
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                required
-              />
-            </div>
-
-            {/* Father's Full Name */}
-            <div className="mb-4">
-              <label className="block text-text font-medium mb-2" htmlFor="father_fullname">
-                Father's Full Name
-              </label>
-              <input
-                type="text"
-                id="father_fullname"
-                name="father_fullname"
-                value={formData.father_fullname}
-                onChange={handleInputChange}
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                required
-              />
-            </div>
-
-            {/* Father's Nationality */}
-            <div className="mb-4">
-              <label className="block text-text font-medium mb-2" htmlFor="father_nationality">
-                Father's Nationality
-              </label>
-              <input
-                type="text"
-                id="father_nationality"
-                name="father_nationality"
-                value={formData.father_nationality}
-                onChange={handleInputChange}
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-              />
-            </div>
-
-            {/* Mother's Full Name */}
-            <div className="mb-4">
-              <label className="block text-text font-medium mb-2" htmlFor="mother_fullname">
-                Mother's Full Name
-              </label>
-              <input
-                type="text"
-                id="mother_fullname"
-                name="mother_fullname"
-                value={formData.mother_fullname}
-                onChange={handleInputChange}
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                required
-              />
-            </div>
-
-            {/* Mother's Nationality */}
-            <div className="mb-4">
-              <label className="block text-text font-medium mb-2" htmlFor="mother_nationality">
-                Mother's Nationality
-              </label>
-              <input
-                type="text"
-                id="mother_nationality"
-                name="mother_nationality"
-                value={formData.mother_nationality}
-                onChange={handleInputChange}
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-              />
-            </div>
-
-            {/* dob */}
-            <div className="mb-4">
-              <label className="block text-text font-medium mb-2" htmlFor="dob">
-                Date of Birth
-              </label>
-              <input
-                type="date"
-                id="dob"
-                name="dob"
-                value={formData.dob}
-                onChange={handleInputChange}
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                required
-              />
-            </div>
-            
-
-            {/* Country of Birth */}
-            <div className="mb-4">
-              <label className="block text-text font-medium mb-2" htmlFor="country_of_birth">
-                Country of Birth
-              </label>
-              <input
-                type="text"
-                id="country_of_birth"
-                name="country_of_birth"
-                value={formData.country_of_birth}
-                onChange={handleInputChange}
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                required
-              />
-            </div>
-
-            {/* Region of Birth */}
-            <div className="mb-4">
-              <label className="block text-text font-medium mb-2" htmlFor="region_of_birth">
-                Region of Birth
-              </label>
-              <input
-                type="text"
-                id="region_of_birth"
-                name="region_of_birth"
-                value={formData.region_of_birth}
-                onChange={handleInputChange}
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                required
-              />
-            </div>
-
-            {/* Place of Birth */}
-            <div className="mb-4">
-              <label className="block text-text font-medium mb-2" htmlFor="place_of_birth">
-                Place of Birth
-              </label>
-              <input
-                type="text"
-                id="place_of_birth"
-                name="place_of_birth"
-                value={formData.place_of_birth}
-                onChange={handleInputChange}
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                required
-              />
-            </div>
-
-            {/* Gender */}
-            <div className="mb-4">
-              <label className="block text-text font-medium mb-2">Gender</label>
-              <select
-                name="gender"
-                value={formData.gender}
-                onChange={handleInputChange}
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                required
-              >
-                <option value="" disabled>Select Gender</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-              </select>
-            </div>
-
-            {/* Applicant Email */}
-            <div className="mb-4">
-              <label className="block text-text font-medium mb-2" htmlFor="applicant_email_address">
-                Applicant's Email Address
-              </label>
-              <input
-                type="email"
-                id="applicant_email_address"
-                name="applicant_email_address"
-                value={formData.applicant_email_address}
-                onChange={handleInputChange}
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-              />
-            </div>
-
-            {/* Phone Number */}
-            <div className="mb-4">
-              <label className="block text-text font-medium mb-2" htmlFor="phone_number">
-                Phone Number
-              </label>
-              <input
-                type="tel"
-                id="phone_number"
-                name="phone_number"
-                value={formData.phone_number}
-                onChange={handleInputChange}
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                required
-              />
-            </div>
-
-            {/* Submit Button */}
-            <div className="mt-6">
-            <button 
-            type="submit" 
-            className={`w-full bg-primary text-white py-3 px-4 rounded-lg flex items-center justify-center hover:bg-primary-dark ${loading ? 'opacity-50' : ''}`}
-            disabled={loading}
-          >
-            {loading ? (
-              <>
-                <div className="w-5 h-5 border-4 border-white border-t-transparent border-solid rounded-full animate-spin mr-2"></div>
-                Submitting...
-              </>
-            ) : (
-              "Submit Application"
-            )}
-          </button>
-
-              
+            <h1 className="text-2xl font-bold mb-6 text-center">Birth Certificate Form</h1>
+            {errorMessage && <p className="text-red-500 text-center">{errorMessage}</p>}
+            {renderStage()}
+            <div className="flex justify-between mt-6">
+              {currentStage > 1 && (
+                <button
+                  type="button"
+                  onClick={previousStage}
+                  className="bg-gray-500 text-white px-4 py-2 rounded-lg"
+                >
+                  Previous
+                </button>
+              )}
+              {currentStage < 3 ? (
+                <button
+                  type="button"
+                  onClick={nextStage}
+                  className="bg-primary text-white px-4 py-2 rounded-lg"
+                >
+                  Next
+                </button>
+              ) : (
+                <button
+                  type="submit"
+                  className={`bg-green-500 text-white px-4 py-2 rounded-lg ${loading ? 'opacity-50' : ''}`}
+                  disabled={loading}
+                >
+                  {loading ? 'Submitting...' : 'Submit'}
+                </button>
+              )}
             </div>
           </form>
         )}

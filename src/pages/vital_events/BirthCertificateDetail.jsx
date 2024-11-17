@@ -1,17 +1,20 @@
-// src/pages/BirthCertificateDetail.jsx
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import api from '../../api/api';
 import jsPDF from 'jspdf';
 import SpinnerLoading from '../../components/SpinnerLoading';
+import Alert from '../../components/Alert';
 
 const BirthCertificateDetail = () => {
+  const [alertConfig, setAlertConfig] = useState({ visible: false, title: '', message: '' });
+
   const { id } = useParams();
   const [application, setApplication] = useState(null);
   const [comment, setComment] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [isStaff, setIsStaff] = useState(false);
+  const [activeButton, setActiveButton] = useState(null); 
 
   useEffect(() => {
     const checkIsStaff = async () => {
@@ -139,25 +142,47 @@ const BirthCertificateDetail = () => {
   const handleSendComment = async () => {
     try {
       await api.patch(`/api/vital-events/birth-certificate/${id}/`, { comment });
+      setAlertConfig({
+        visible: true,
+        title: "Success",
+        message: "Comment sent successfully."
+      });
       setApplication((prev) => ({ ...prev, comment }));
-      alert('Comment sent successfully');
     } catch (error) {
       console.error('Failed to send comment:', error);
-      alert('Failed to send the comment.');
+      setAlertConfig({
+        visible: true,
+        title: "Failure",
+        message: "Comment was not sent. Please try again."
+      });
     }
   };
 
   const updateStatus = async (status) => {
+    setActiveButton(status);
     setLoading(true);
     try {
       await api.patch(`/api/vital-events/birth-certificate/${id}/`, { status });
+
+      setAlertConfig({
+        visible: true,
+        title: "Success",
+        message: `Application status updated to ${status}.`
+      });
+
       setApplication((prev) => ({ ...prev, status }));
-      alert(`Application ${status} successfully.`);
+      
     } catch (error) {
-      console.error(`Failed to update status to ${status}:`, error);
-      alert(`Failed to update status to ${status}.`);
+      
+      setAlertConfig({
+        visible: true,
+        title: "Failure",
+        message: `Failed to update status to ${status}. Please try again.`
+      });
+
     } finally {
       setLoading(false);
+      setActiveButton(status);
     }
   };
 
@@ -197,7 +222,7 @@ const BirthCertificateDetail = () => {
         </div>
 
         <div className="border-t pt-4">
-          <p className="font-semibold">Comment:</p>
+          <p className="font-semibold">Reviewer Comment:</p>
           <pre className="bg-gray-100 p-2 rounded-md">{application.comment || 'No comments available'}</pre>
         </div>
 
@@ -217,27 +242,55 @@ const BirthCertificateDetail = () => {
               Send Comment
             </button>
             <div className="flex justify-between">
-              <button onClick={() => updateStatus('rejected')} className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg w-32" disabled={loading}>
-                {loading && <span className="loader mr-2"></span>}Deny
+              {/* Deny Button */}
+              <button
+                onClick={() => updateStatus('rejected')}
+                className={`bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg w-32 flex items-center justify-center ${
+                  loading && activeButton === 'rejected' ? 'opacity-50 cursor-not-allowed' : ''
+                }`}
+                disabled={loading && activeButton === 'rejected'}
+              >
+                {loading && activeButton === 'rejected' ? (
+                  <span className="loader border-t-transparent border-white animate-spin h-5 w-5 mr-2 rounded-full border-2"></span>
+                ) : null}
+                Deny
               </button>
-              <button onClick={() => updateStatus('approved')} className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg w-32" disabled={loading}>
-                {loading && <span className="loader mr-2"></span>}Approve
+
+              <button
+                onClick={() => updateStatus('approved')}
+                className={`bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg w-32 flex items-center justify-center ${
+                  loading && activeButton === 'approved' ? 'opacity-50 cursor-not-allowed' : ''
+                }`}
+                disabled={loading && activeButton === 'approved'}
+              >
+                {loading && activeButton === 'approved' ? (
+                  <span className="loader border-t-transparent border-white animate-spin h-5 w-5 mr-2 rounded-full border-2"></span>
+                ) : null}
+                Approve
               </button>
-            </div>
+              </div>
+
           </div>
         ) : (
           <>
-            <button onClick={handleDeleteApplication} className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg w-full mb-4">
+            <button onClick={handleDeleteApplication} className="bg-red-500 hover:bg-red-600 text-white font-semibold mt-6 py-2 px-4 rounded-lg w-full mb-4">
               Delete Application
             </button>
             {application.status === 'approved' && (
-              <button onClick={handlePrintCertificate} className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg w-full">
+              <button onClick={handlePrintCertificate} className="bg-blue-500 hover:bg-blue-600 text-white font-semibold mt-6 py-2 px-4 rounded-lg w-full">
                 Print Certificate
               </button>
             )}
           </>
         )}
       </div>
+      {alertConfig.visible && (
+            <Alert
+              title={alertConfig.title}
+              message={alertConfig.message}
+              onClose={() => setAlertConfig({ ...alertConfig, visible: false })}
+            />
+          )}
     </div>
   );
 };

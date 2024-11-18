@@ -225,7 +225,7 @@ const StaffDashboard = () => {
           {/* Search Box */}
           <input
             type="text"
-            placeholder="Search by Application Number, Applicant Name, or Child's Name"
+            placeholder="Search by Application Number, Applicant Name"
             value={searchTerm}
             onChange={handleSearchChange}
             className="mb-4 p-2 border border-gray-300 rounded-md w-full"

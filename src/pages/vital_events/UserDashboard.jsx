@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import ServicesSection from '../../components/ServicesSection';
 import api from '../../api/api';
 
+
+
 const UserDashboard = () => {
   const [applications, setApplications] = useState([]);
   const [currentApplications, setCurrentApplications] = useState([]);
@@ -11,6 +13,7 @@ const UserDashboard = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const servicesSectionRef = useRef(null);
   const navigate = useNavigate();
+  const [sortOrder, setSortOrder] = useState('asc'); 
 
   // Mock notifications data
   const [notifications] = useState([
@@ -92,6 +95,23 @@ const UserDashboard = () => {
     }
   };
 
+
+  const sortByDate = () => {
+    const sortedApplications = [...currentApplications].sort((a, b) => {
+      const dateA = new Date(a.date_created);
+      const dateB = new Date(b.date_created);
+  
+      if (sortOrder === 'asc') {
+        return dateA - dateB;
+      } else {
+        return dateB - dateA;
+      }
+    });
+  
+    setCurrentApplications(sortedApplications);
+    setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc'); // Toggle the sort order
+  };
+  
   return (
     <div className="bg-background-light min-h-screen flex flex-col items-center">
       <header className="bg-primary-dark text-white p-16 text-center w-full">
@@ -104,7 +124,7 @@ const UserDashboard = () => {
           {/* Search Box */}
           <input
             type="text"
-            placeholder="Search by Application Number, Applicant Name, or Child's Name"
+            placeholder="Search by Application Number, Applicant Name"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value.toLowerCase())}
             className="mb-4 p-2 border border-gray-300 rounded-md w-full"
@@ -119,12 +139,15 @@ const UserDashboard = () => {
                   <thead className="bg-primary-dark text-white">
                     <tr>
                       <th className="py-2 px-4">Application Number</th>
-                      <th className="py-2 px-4">Applicant Name</th>
                       <th className="py-2 px-4">First Name</th>
                       <th className="py-2 px-4">Last Name</th>
-                      <th className="py-2 px-4">Submission Date</th>
+                      <th className="py-2 px-8 cursor-pointer"
+                          onClick={sortByDate}>
+                          Submission Date {sortOrder === 'asc' ? '↑' : '↓'}
+                        </th>
+
                       <th className="py-2 px-4">Status</th>
-                      <th className="py-2 px-4">Actions</th>
+                      <th className="py-2 px-10">Type</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -135,21 +158,11 @@ const UserDashboard = () => {
                         onClick={() => handleRowClick(app.id)}
                       >
                         <td className="py-2 px-4">{app.application_number}</td>
-                        <td className="py-2 px-4">{app.applicant_name}</td>
                         <td className="py-2 px-4">{app.first_name}</td>
                         <td className="py-2 px-4">{app.last_name}</td>
                         <td className="py-2 px-4">{formatDate(app.date_created)}</td>
                         <td className="py-2 px-4 text-secondary">Pending</td>
-                        <td className="py-2 px-4">
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleDeleteApplication(app.id);
-                            }}
-                            className="text-red-600 hover:underline"
-                          >
-                            Delete
-                          </button>
+                        <td className="py-2 px-4"> Vital Event
                         </td>
                       </tr>
                     ))}
@@ -170,12 +183,14 @@ const UserDashboard = () => {
                   <thead className="bg-primary-dark text-white">
                     <tr>
                       <th className="py-2 px-4">Application Number</th>
-                      <th className="py-2 px-4">Applicant Name</th>
                       <th className="py-2 px-4">First Name</th>
                       <th className="py-2 px-4">Last Name</th>
-                      <th className="py-2 px-4">Submission Date</th>
+                      <th className="py-2 px-4 cursor-pointer"
+                          onClick={sortByDate}>
+                          Submission Date {sortOrder === 'asc' ? '↑' : '↓'}
+                        </th>
                       <th className="py-2 px-4">Status</th>
-                      <th className="py-2 px-4">Actions</th>
+                      <th className="py-2 px-10">Type</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -186,7 +201,6 @@ const UserDashboard = () => {
                         onClick={() => handleRowClick(app.id)}
                       >
                         <td className="py-2 px-4">{app.application_number}</td>
-                        <td className="py-2 px-4">{app.applicant_name}</td>
                         <td className="py-2 px-4">{app.first_name}</td>
                         <td className="py-2 px-4">{app.last_name}</td>
                         <td className="py-2 px-4">{formatDate(app.date_created)}</td>
@@ -197,16 +211,7 @@ const UserDashboard = () => {
                         >
                           {app.status.charAt(0).toUpperCase() + app.status.slice(1)}
                         </td>
-                        <td className="py-2 px-4">
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleDeleteApplication(app.id);
-                            }}
-                            className="text-red-600 hover:underline"
-                          >
-                            Delete
-                          </button>
+                        <td className="py-2 px-4 "> Vital Event
                         </td>
                       </tr>
                     ))}

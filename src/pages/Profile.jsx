@@ -20,15 +20,16 @@ const ProfilePage = () => {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const response = await api.get('/auth/users/me/');
+                const response = await api.get('/auth/user/profile/');
                 const data = response.data;
 
-                // Update user state with the fetched data, providing default values
                 setUser({
                     firstName: data.first_name || 'None',
                     lastName: data.last_name || 'None',
                     phoneNumber: data.phone_number || 'None',
-                    email: data.email || 'None'
+                    email: data.email || 'None',
+                    userType: data.user_type || 'None',
+                    NID: data.nid || 'None'
                 });
             } catch (error) {
                 setError('Failed to load user data.');
@@ -67,15 +68,30 @@ const ProfilePage = () => {
                     </div>
                 </div>
 
-                {/* User Info */}
+               
                 <h1 className="text-2xl font-semibold text-gray-800">
                     {user.firstName} {user.lastName}
                 </h1>
-                <p className="text-gray-600 mt-2">Phone: {user.phoneNumber}</p>
-                <p className="text-gray-600 mt-2">Email: {user.email}</p>
-                <p className="text-gray-600 mt-2">User Type: Public</p>
+                <div className="mt-4">
+                    <div className="flex justify-between text-gray-600 mt-2 ">
+                        <span className='font-semibold'>Phone:</span>
+                        <span className="text-right">{user.phoneNumber}</span>
+                    </div>
+                    <div className="flex justify-between text-gray-600 mt-2">
+                    <span className='font-semibold'>Email:</span>
+                        <span className="text-right">{user.email}</span>
+                    </div>
+                    
+                    <div className="flex justify-between text-gray-600 mt-2">
+                    <span className='font-semibold'>National ID:</span>
+                        <span className="text-right">{user.NID}</span>
+                    </div>
 
-                {/* Spacer */}
+                    <div className="flex justify-between text-gray-600 mt-2">
+                    <span className='font-semibold'>User Type:</span>
+                        <span className="text-right">{user.userType}</span>
+                    </div>
+                </div>
                 <div className="my-6 border-t border-gray-300"></div>
 
                 {/* Logout Button */}

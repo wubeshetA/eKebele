@@ -15,6 +15,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [nid, setNID] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,7 +25,7 @@ const Register = () => {
     console.log(firstName, lastName, phoneNumber, email, password);
 
     // Validate required fields
-    if (!firstName || !lastName || !phoneNumber || !password) {
+    if (!firstName || !lastName || !phoneNumber || !password || !nid || !email ) {
       setErrorMessage("Please fill out all required fields.");
       setLoading(false);
       return;
@@ -52,7 +53,8 @@ const Register = () => {
         "last_name": lastName,
         "phone_number": phoneNumber,
         "email": email,
-        "password": password
+        "password": password,
+        "nid": nid
       });
       if (res.status === 201) {
         navigate("/verify-email", { state: { email } });
@@ -134,7 +136,7 @@ const Register = () => {
           {/* Email Input */}
           <div>
             <label htmlFor="email" className="block text-sm font-semibold text-gray-700">
-              Email Address
+              Email Address <span className="text-red-500">*</span>
             </label>
             <input
               type="email"
@@ -142,7 +144,24 @@ const Register = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-primary focus:border-primary"
-              placeholder="Enter your email address (optional)"
+              placeholder="Enter your email address"
+              required
+            />
+          </div>
+
+          {/* National ID Input */}
+          <div>
+            <label htmlFor="email" className="block text-sm font-semibold text-gray-700">
+              National ID (Fayda Number) <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="nid"
+              id="nid"
+              value={nid}
+              onChange={(e) => setNID(e.target.value)}
+              className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-primary focus:border-primary"
+              placeholder="Your National ID (Fayda Number)"
+              required
             />
           </div>
 

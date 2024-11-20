@@ -1,0 +1,18 @@
+{
+    "validUser": {
+      "firstName": "John",
+      "lastName": "Doe",
+      "phoneNumber": "1234567890",
+      "email": "john.doe@example.com",
+      "password": "Password123!",
+      "nid": "12345678901234"
+    },
+    "invalidUser": {
+      "firstName": "",
+      "lastName": "",
+      "phoneNumber": "invalid",
+      "email": "invalid-email",
+      "password": "short",
+      "nid": "invalidnid"
+    }
+  }

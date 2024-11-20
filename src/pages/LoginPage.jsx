@@ -67,6 +67,7 @@ const LoginPage = () => {
             <div className="relative mt-1">
               <FiMail className="absolute left-3 top-3 text-gray-400" />
               <input
+              id="email"
                 type="text"
                 className="text-gray-900 block w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-primary focus:border-primary"
                 placeholder="Enter phone number or email"
@@ -80,6 +81,7 @@ const LoginPage = () => {
             <div className="relative mt-1">
               <FiLock className="absolute left-3 top-3 text-gray-400" />
               <input
+                id="password"
                 type="password"
                 className="text-gray-900 block w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-primary focus:border-primary"
                 placeholder="Enter password"

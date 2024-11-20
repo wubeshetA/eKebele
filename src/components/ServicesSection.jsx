@@ -152,6 +152,7 @@ const ServicesSection = () => {
               Please select to which physical kebele office you want this to be sent:
             </p>
             <select
+            name="region"
               className="w-full p-2 border rounded mb-4"
               value={selectedRegion}
               onChange={(e) => handleRegionSelect(e.target.value)}
@@ -167,7 +168,8 @@ const ServicesSection = () => {
             {selectedRegion === "Addis Ababa" && (
               <div className="mt-4">
                 <p className="mb-4">Please select a sub-city in Addis Ababa:</p>
-                <select
+                <select 
+                name="subCity"
                   className="w-full p-2 border rounded mb-4"
                   value={selectedSubCity}
                   onChange={(e) => handleSubCitySelect(e.target.value)}

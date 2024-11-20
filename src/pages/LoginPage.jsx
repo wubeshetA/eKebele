@@ -38,7 +38,22 @@ const LoginPage = () => {
         navigate("/dashboard");
 
       } else {
-        setErrorMessage("Invalid login credentials. Please try again.");
+        // handle differt status code
+        if (res.status === 401) {
+          setErrorMessage("Invalid login credentials. Please try again.");
+        }
+        else if (res.status === 400) {
+          setErrorMessage("Invalid login credentials. Please try again.");
+        }
+        else if (res.status === 404) {
+          setErrorMessage("Invalid login credentials. Please try again.");
+        }
+        else if (res.status >= 500) {
+          setErrorMessage("Server error occurred. Please try again later.");
+        }
+        else {
+          setErrorMessage("An error occurred. Please try again later.");
+        }
       }
     } catch (error) {
       setErrorMessage("An error occurred. Please try again later.");

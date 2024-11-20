@@ -39,6 +39,13 @@ const Register = () => {
       return;
     }
 
+    const nidPattern = /^[0-9]{12}$/;
+    if (!nidPattern.test(nid)) {
+      setErrorMessage("Please enter a valid 12-digit National ID.");
+      setLoading(false);
+      return;
+    }
+
     // Password validation (e.g., minimum length)
     if (password.length < 6) {
       setErrorMessage("Password must be at least 6 characters long.");
@@ -59,7 +66,17 @@ const Register = () => {
       if (res.status === 201) {
         navigate("/verify-email", { state: { email } });
       } else {
-        setErrorMessage("An error occurred. Please try again later.");
+        // if status code is 400
+        if (res.status === 400) {
+          setErrorMessage("Invalid data. Please check your inputs.");
+        }
+        // if statsu code is >= 500
+        else if (res.status >= 500) {
+          setErrorMessage("Server error occurred. Please try again later.");
+        }
+        else {
+          setErrorMessage("An error occurred. Please try again later.");
+        }
       }
 
     } catch (error) {
